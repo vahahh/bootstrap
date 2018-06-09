@@ -1,11 +1,11 @@
-import Util from '../util'
-
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.0.0-beta): dom/manipulator.js
+ * Bootstrap (v4.1.1): dom/manipulator.js
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
+
+const regexDataKey = /[A-Z]/g
 
 const Manipulator = {
   setChecked(input, val) {
@@ -23,21 +23,13 @@ const Manipulator = {
   },
 
   setDataAttribute(element, key, value) {
-    const $ = Util.jQuery
-    if (typeof $ !== 'undefined') {
-      $(element).data(key, value)
-    }
-
-    element.setAttribute(`data-${key.replace(/[A-Z]/g, (chr) => `-${chr.toLowerCase()}`)}`, value)
+    key = key.replace(regexDataKey, (chr) => chr.toLowerCase())
+    element.setAttribute(`data-${key}`, value)
   },
 
   removeDataAttribute(element, key) {
-    const $ = Util.jQuery
-    if (typeof $ !== 'undefined') {
-      $(element).removeData(key)
-    }
-
-    element.removeAttribute(`data-${key.replace(/[A-Z]/g, (chr) => `-${chr.toLowerCase()}`)}`)
+    key = key.replace(regexDataKey, (chr) => chr.toLowerCase())
+    element.removeAttribute(`data-${key}`)
   },
 
   offset(element) {
